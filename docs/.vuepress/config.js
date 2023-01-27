@@ -37,6 +37,7 @@ module.exports = {
         items: [
           { text: '计算机网络', link: '/pages/cs/network.md' },
           { text: '数据结构', link: '/pages/cs/dataStructure.md' },
+          { text: 'CPP', link: '/pages/cs/cpp.md' },
         ]
       },
       {
@@ -59,11 +60,11 @@ module.exports = {
     sidebar: {
       '/pages/cs/': [
         {
-          title: '数据结构',   // 一级菜单名称
+          title: '数据结构与算法',   // 一级菜单名称
           collapsable: true, // false为默认展开菜单, 默认值true是折叠,
           sidebarDepth: 1,    //  设置侧边导航自动提取markdown文件标题的层级，默认1为h2层级
           children: [
-            ['dataStructure.md', '数据结构'], //菜单名称为'子菜单1'，跳转至/pages/folder1/test1.md
+            ['dataStructure.md', '数据结构与算法'], //菜单名称为'子菜单1'，跳转至/pages/folder1/test1.md
           ]
         },
         {
@@ -72,7 +73,15 @@ module.exports = {
           children: [
             ['network.md', '网络']
           ]
-        }
+        },
+        {
+          title: 'cpp',
+          collapsable: true,
+          sidebarDepth: 1,
+          children: [
+            ['cpp.md', 'C++'],
+          ]
+        },
       ],
       '/pages/frontend/': [
         {
@@ -81,6 +90,14 @@ module.exports = {
           sidebarDepth: 1,
           children: [
             ['javascript.md', 'JavaScript'],
+          ]
+        },
+        {
+          title: 'CSS',
+          collapsable: true,
+          sidebarDepth: 1,
+          children: [
+            ['css.md', 'CSS'],
           ]
         },
         {
@@ -98,7 +115,8 @@ module.exports = {
           children: [
             ['browser.md', '浏览器'],
           ]
-        }
+        },
+
       ],
       '/pages/life/': [
         {
@@ -107,6 +125,7 @@ module.exports = {
           sidebarDepth: 1,
           children: [
             ['english.md', '学英语！'],
+            ['grammar.md', '语法基础'],
           ]
         },
         {
@@ -114,7 +133,7 @@ module.exports = {
           collapsable: true,
           sidebarDepth: 1,
           children: [
-            ['record.md', '生活记录'],
+            ['record.md', '橙子生长记录'],
           ]
         }
       ],
