@@ -38,6 +38,7 @@ module.exports = {
           { text: '计算机网络', link: '/pages/cs/network.md' },
           { text: '数据结构', link: '/pages/cs/dataStructure.md' },
           { text: 'CPP', link: '/pages/cs/cpp.md' },
+          { text: 'CSAPP', link: '/pages/cs/csapp.md' },
         ]
       },
       {
@@ -80,6 +81,14 @@ module.exports = {
           sidebarDepth: 1,
           children: [
             ['cpp.md', 'C++'],
+          ]
+        },
+        {
+          title: 'csapp读书笔记',
+          collapsable: true,
+          sidebarDepth: 1,
+          children: [
+            ['csapp.md', 'csapp'],
           ]
         },
       ],
