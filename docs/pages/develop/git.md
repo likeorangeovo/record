@@ -51,8 +51,8 @@ push：将本地仓库与远程仓库合并
 origin：远程仓库必须使用
 master：提交本地matser分支仓库 
 */
-git branch --set-upstream-to=origin/dev dev
-//追踪远程分支origin/dev到本地分支dev
+git push origin 分支名 --force //强制推送会导致远程仓库被覆盖
+git branch --set-upstream-to=origin/dev dev //追踪远程分支origin/dev到本地分支dev
 git pull //将本地代码更新至远程仓库最新代码版本
 ## 直接覆盖本地 慎用，用fetch+merge替代
 git fetch //拉取所有更新,不同步，需要通过merge同步
