@@ -53,7 +53,29 @@ master：提交本地matser分支仓库
 */
 git branch --set-upstream-to=origin/dev dev
 //追踪远程分支origin/dev到本地分支dev
-git pull //拉取
-
+git pull //将本地代码更新至远程仓库最新代码版本
+## 直接覆盖本地 慎用，用fetch+merge替代
+git fetch //拉取所有更新,不同步，需要通过merge同步
 ~~~
 
+## git 报错解决方案
+
+1. Failed to connect to github.com port 443
+
+   ~~~js
+   //用vpn代理(http协议)
+   git config --global http.proxy 127.0.0.1:7890
+   git config --global https.proxy 127.0.0.1:7890
+   ##主机号为代理主机号，端口号为代理主机的监听IP
+   //socks5协议(由代理软件决定)
+   git config --global http.proxy socks5 127.0.0.1:7890
+   git config --global https.proxy socks5 127.0.0.1:7890
+   //查看代理命令
+   git config --global --get http.proxy
+   git config --global --get https.proxy
+   //取消代理命令
+   git config --global --unset http.proxy
+   git config --global --unset https.proxy
+   ~~~
+
+   
