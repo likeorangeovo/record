@@ -8,6 +8,7 @@
 module.exports = {
   title: '青山小站',
   description: 'Record about my studies',
+  base:'/record/',
   head: [
     ['link',
       { rel: 'icon', href: '/avatar.jpg' }
