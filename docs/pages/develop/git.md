@@ -16,7 +16,7 @@ git log //git提交日志
 git reset --hard 版本号(上个版本HEAD^,上100个版本HEAD^100) //回滚版本
 ## --hard yy 会清空工作区,暂存区,以及yy后的提交 慎用
 git reset --mixed(默认) yy //回滚版本 工作区不受影响，暂存区，本地仓库区回滚到yy对应的commit-id上
-git reset --soft(默认) yy //回滚版本 工作区，暂存区不受影响，本地仓库区回滚到yy对应的commit-id上
+git reset --soft yy //回滚版本 工作区，暂存区不受影响，本地仓库区回滚到yy对应的commit-id上
 git reflog //查看历史日志
 git restore file //撤销文件的修改(在暂存区回归add前状态,不在暂存区的回到当前版本状态)
 git rm file //更新删除操作到暂存区
