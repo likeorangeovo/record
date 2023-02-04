@@ -27,6 +27,8 @@ git rm file //更新删除操作到暂存区
 ~~~js
 git branch //查看分支
 git branch dev //创建dev分支
+git branch -d dev //删除本地分支
+git push origin --delete dev //删除远程分支
 git checkout dev //切换到dev分支
 ## git checkout的作用是检出，如果是文件的话，会放弃对文件的缓存区操作
 git checkout . //使用暂存区文件覆盖工作区内容
