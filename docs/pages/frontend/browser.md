@@ -1,141 +1,211 @@
-# HTML总结
+#  html
 
-## H5语义化
+## 1-1 src 和 href 的区别
 
-用正确的标签做正确的事
+前者是将资源拼接到当前的标签位置，会暂停其他资源的下载
 
-常见语义化标签：
+后者是建立与URL之间的链接通道，并行下载，不会停止对当前文档的处理
 
-header，footer，aside，nav，main，section，article
+src常用于img等下载，href常用于link a 标签
 
-优点：利于搜索引擎优化（SEO），代码结构清晰，利于开发维护，方便屏幕阅读器等设备解析
+## 1-2 html语义化
 
-## H5新特性
+使文档结构显示的更加清晰，便于开发维护
 
-- 音视频处理API(audio,video)
+便于盲人阅读器等设备进行处理
 
-  src:地址；autoplay：自动播放；controls:显示控制条；loop:循环；muted：静音
+便于网页seo
 
-```js
-  <video src="" controls>XXXXX</video>
-```
+常见标签， footer section article aside main header
 
-```javascript
-  <audio src="" preload="auto" controls></audio>
-```
+##  1-3 html5更新
 
-- canvas / webGL
+ 语义化标签
 
-- 拖拽释放(Drag and drop) API
+媒体标签 audio video
 
-- history API
+dom操作 document.querySelecter document.queryallselecter
 
-- 地理位置(Geolocation)API
+web存储 localstroge sessionstroge
 
-- webSocket
+## 1-4 行内元素 块级元素 空元素
 
-- web存储 localStorage没有时间限制、SessionStorage针对 session 的数据存储
+行内元素：a，span，input，img，select，
 
-- 表单控件，calendar、date、time、email、url、search
-- dom查询
+块级元素：div，ul，li，ol，h， p
 
-```js
-document.querySelector()
-document.querySelectorAll()
-```
+空元素：br，hr，link，meta
 
-- 
-
-## DOCTYPE使用
-
-标记语言的文档类型声明，浏览器应该以该文档类型解析文档 
-浏览器渲染模式：
-
-1. CSS1Compat：标准模式，以其支持的最高标准呈现页面
-2. BackCompat：怪异模式，以向后兼容模式显示页面
-
-## script中defer,async 的区别
+## 1-5 defer 和 async 的区别
 
 无defer，async，浏览器立刻加载并执行js脚本
-async：（文档加载与执行）与（js脚本加载与执行）并行进行 （**DomContentLoaded 事件只关注 HTML 是否被解析完，而不关注 async 脚本**）
-defer：（文档加载与js加载）并行执行，js脚本在文档解析完成后执行（**在DOMContentloaded事件触发执行前**）
 
-## 浏览器渲染过程
+共同点：两者都是异步加载js文件
 
-> HTml解析，生成DOM树
+defer：在文档加载完后执行，在domcontentload前
 
-1. 字符编码：将原始字节转换成编码字符
-2. 令牌化：根据html规范转换成令牌（例：body标签及标签中的字符串与属性）
-3. 生成节点对象：令牌转换成其定义的节点对象
-4. 构建DOM树：将节点对象构建成树状结构（DOM树）
+async：文档加载与执行和js加载与执行是并行执行的
 
-> CSS解析，构建CSSOM树
+## 1-6 浏览器渲染
 
-1. 根据CSS关系，构建CSSOM树
-
-> Render Tree
-
-1. 将DOM树，CSSOM树结合构建渲染树
-
-> Layout
-
-1. 已知节点的内容与样式，计算节点在浏览器窗口的大小与位置
-2. 从渲染树根节点遍历，用盒子模型表示各节点间的距离，以确定其位置与大小
-
-> Paint
-
-1. 浏览器发出Paint事件，将渲染树绘制成像素
-
-> load与DomContentLoaded事件
-
-1. load：在HTML所有相关资源被**加载完成**后触发
-2. DomContentLoaded：在HTML文档被**解析完成**之后触发(DOM树构建末尾)
-
-## js,css对浏览器渲染的影响
-
-1. js会阻塞DOM解析，（图片，js，css）资源的加载；（阻塞DOM树生成）
-2. css不会阻塞DOM解析及资源加载，会阻塞js的**执行**（阻塞CSSOM生成，页面渲染）
-3. 现代浏览器会进行prefetch优化，提前下载html文档中引用的资源
+### 渲染流程
 
 ![image-20220809223355017](./../../.vuepress/public/img/image-20220809223355017.png)
 
-> 优化渲染流程（减少白屏时间）
+> Html解析，解析DOM树
 
-1. 使用内联CSS JS，减少外链的下载
-2. 使用async，defer
-3. 使用CDN
+将原始字符转换成对应的节点对象，后将节点对象构建成树状结构
 
-> script,link,src,href
+> CSS解析，生成CSSOM树
 
-1. `<link href>`用于链接外部`css`样式表等其他相关外部资源`<script src>`标签用于引入js文件
-2. href：HyperText Reference，在元素和引用资源间建立联系，并⾏下载资源，加载时不会停止对当前文档的处理（`a`，`link`）
-3. src：source，指向外部资源的位置，资源会迁入到当前标签所在位置，会暂停其他资源的下载和处理，直到该资源加载、编译、执⾏完毕（`script`、`img`、`iframe`）
-4. 补充：link和@import的区别，link是XHTML标签，除了加载CSS外，还可以定义RSS等其他事务；@import属于CSS范畴，只能加载CSS。
-5. 1.url
-   url（统一资源定位符）：是对可以从互联网上得到的资源的位置和访问方法的一种简洁的表示，是互联网上标准资源的地址。
-   2.href
-   href：Hypertext Reference的缩写。
-   意思是超文本引用。
-   3.rel
-   rel：relationship的英文缩写·
-   REL属性用于定义链接的文件和HTML文档之间的关系。
-   4.src
-   src可以是源文件（source）的简写，一般用作目录名称用于存放源代码。
-   一般指的是引用外部文件的路径，像img标签中src表示图片或者js文件的路径。
+> Render Tree]
 
-## meta标签
+将DOM树和CSSOM树结合形成渲染树
 
-由name,content 定义，用来描述文档属性
+> layout 
 
-1.	charset(编码类型)
-2.	keywords(关键词)
-3.	description(页面描述)
-4.	refresh(页面刷新、重定向)
-5.	viewport(控制窗口的大小和比例)
+根据已知的节点和样式，计算节点在浏览器中的大小和位置
 
-## img 的srcset属性
+从渲染树根节点开始遍历，用盒子模型表示各节点之间的距离，确定其位置和大小
 
-根据屏幕密度的不同设置不同的图片
+> Paint
+
+将渲染树绘制
+
+### load和DomContentload事件
+
+load：在所有资源加载完成后触发
+
+domcontentload：在html被**解析完成**后触发
+
+### js和css对渲染的影响
+
+js会阻碍DOM树生成，阻碍图片，js，css等资源的加载
+
+css会阻塞CSSOM生成，阻碍页面渲染，阻碍js**执行**
+
+## 2-1 DOCTYPE的作用
+
+告诉浏览器用怎样的方式解析文档
+
+标准模式：浏览器以支持的最高标准呈现页面
+
+怪异模式：页面以向后兼容的方式呈现页面
+
+## 2-2 常见的meta标签
+
+由name和content属性定义
+
+keyword页面关键词，页面描述description，charset编码类型
+
+refresh页面重定向和刷新，viewport移动端适配
+
+## 2-3 web-worker
+
+运行在后台的js，独立与其他脚本，不影响页面的性能
+
+使用方法
+
+````js
+//主线程
+let worker = new worker('work.js')
+//向worker发送信息
+worker.onMessage('msg')
+//关闭
+worker.terminate()
+//处理err事件
+worker.onerror(function(event){
+})
+````
+```js
+//work.js 
+//监听数据传输
+onmessage = function(e){
+	const res = e
+	//postMessage前是需要通讯的window对象，接收参数第一个时传输的数据，第二个是目标窗口的源，设置为*则可以传给任意窗口
+	postMessage('okk')
+}
+```
+
+## 2-4 head标签的作用
+
+描述了文档的各种属性和信息
+
+引用样式表，脚本等，**title**为文章标题，唯一的必须元素
+
+link，meta，script，style
+
+## 2-5 Canvas和svg的区别
+
+svg属于xml描述的2d图形语言
+
+- 不依赖分辨率
+
+- 适合有大量渲染区域的应用程序（谷歌地图）
+
+- 复杂度高会减慢渲染速度
+
+```html
+<svg width="100%" height="100%" version="1.1" xmlns="http://www.w3.org/2000/svg">
+	<rect width="30" height="40" x="20" y="20"
+    style="fill:rgb(0,0,255); stroke-width:1; stroke:rgb(0,0,0)" />
+</svg>
+```
+canvas画布，逐像素渲染
+- 依赖分辨率
+- 适合图像密集型的游戏
+- 可以以jpg，png格式保存对象
+```html
+<canvas id="tutorial" width="300" height="300"></canvas>
+```
+```js
+function draw(){
+    var canvas = document.getElementById('tutorial');
+    if(!canvas.getContext) return;
+    var ctx = canvas.getContext("2d");
+    ctx.fillStyle = "rgb(200,0,0)";
+      //绘制矩形
+    ctx.fillRect (10, 10, 55, 50);
+ 
+    ctx.fillStyle = "rgba(0, 0, 200, 0.5)";
+    ctx.fillRect (30, 30, 55, 50);
+```
+
+## 2-6 title h1 b strong i em 区别
+
+语义不同，表现效果一致
+
+## 3-1 渐进增强和优雅降级
+
+渐进增强：
+
+针对低版本浏览器进行页面重构，在保证基本功能的情况下，对高级浏览器追加效果
+
+优雅降级：
+
+直接构建完整的功能，在对低版本浏览器进行兼容
+
+## 3-2 doctype和!doctype html 有何作用，严格混杂模式的区别
+
+文档声明是告诉浏览器，当前html使用的版本，便于正确解析
+
+严格模式，浏览器按照w3c标准解析文档
+
+混杂模式：浏览器以向后兼容的方式解析文档
+
+## 3-3 label 作用 如何使用
+
+定义表单控件的关系，选择label标签时会自动定位到绑定的表单控件上
+
+```html
+<label for="mobile">Number:</label>
+<input type="text" id="mobile"/>
+<label>Date:<input type="text"/></label>
+```
+
+## 3-4 img srcest属性的作用
+
+响应式页面根据屏幕密度的不同。设置不同的图片
 
 ```html
 <img src="image-128.png"
@@ -143,28 +213,18 @@ defer：（文档加载与js加载）并行执行，js脚本在文档解析完�
      sizes="(max-width: 360px) 340px, 128px" />
 ```
 
-## 块级元素，行内元素，void元素
+## 3-5 html 离线存储怎么用
 
-- 行内元素有：a b span img input select strong；
-- 块级元素有：div ul ol li dl dt dd h1 h2 h3 h4 h5 h6 p；
-- `<br>、<hr>、<img>、<input>、<link>、<meta>`
+在没有联网时，可以正常访问站点
 
-## web worker
+基于一个新建的.appcache文件的缓存技术，将离线存储资源存储下来
 
-web worker 是运行在后台的 js，独立于其他脚本，不会影响页面的性能。 并且通过 postMessage 将结果回传到主线程。这样在进行复杂操作的时候，就不会阻塞主线程了。
-
-## HTML5的离线储存
-
-HTML5的离线存储是基于一个新建的 .appcache 文件的缓存机制(不是存储技术)，通过这个文件上的解析清单离线存储资源，这些资源就会像cookie一样被存储了下来。
-（1）创建一个和 html 同名的 manifest 文件，然后在页面头部加入 manifest 属性：
+使用方法：
 
 ```html
+//创建一个和html同名的manifest文件，在页面头部加入manifest属性
 <html lang="en" manifest="index.manifest">
-```
-
-（2）在 cache.manifest 文件中编写需要离线存储的资源：
-
-```
+//在index.manifest文件中编写需要理想存储的资源
 CACHE MANIFEST
     #v0.11
     CACHE:
@@ -176,22 +236,14 @@ CACHE MANIFEST
     / /offline.html
 ```
 
-## 浏览器乱码原因
+更新缓存的方法：
 
-网页源码是gbk编码，内容是utf-8编码，反之亦然
-网页源码为gbk，数据库存储数据编码为utf-8
+更新manifest文件，通过js操作，清除浏览器缓存
 
-## 渐进增强，优雅降级
+离线存储的管理逻辑：
 
-- 渐进增强：针对低版本浏览器进行页面重构，保证基本功能，再针对高版本浏览器进行改进追加功能
-- 优雅降级：一开始就构建完整功能，后对低版本浏览器进行兼容
+联网时，发现manifest属性，请求manifest文件，将文件内对应的资源进行存储。
 
-## drag Api
+若已经存储，则将新旧manifest文件对比，更新缓存
 
-dragstart：事件主体是被拖放元素，在开始拖放被拖放元素时触发。
-darg：事件主体是被拖放元素，在正在拖放被拖放元素时触发。
-dragenter：事件主体是目标元素，在被拖放元素进入某元素时触发。
-dragover：事件主体是目标元素，在被拖放在某元素内移动时触发。
-dragleave：事件主体是目标元素，在被拖放元素移出目标元素是触发。
-drop：事件主体是目标元素，在目标元素完全接受被拖放元素时触发。
-dragend：事件主体是被拖放元素，在整个拖放操作结束时触发。
+离线时：直接使用缓存中的资源

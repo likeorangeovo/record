@@ -28,7 +28,7 @@ module.exports = {
           { text: 'JavaScript', link: '/pages/frontend/javascript.md' },
           //点击标签会跳转至link的markdown文件生成的页面
           { text: 'CSS', link: '/pages/frontend/css.md' },
-          { text: 'Vue2', link: '/pages/frontend/vue2.md' },
+          { text: 'Vue', link: '/pages/frontend/vue.md' },
           { text: '浏览器', link: '/pages/frontend/browser.md' },
         ]
       },
@@ -111,11 +111,11 @@ module.exports = {
           ]
         },
         {
-          title: 'Vue2',
+          title: 'Vue',
           collapsable: true,
           sidebarDepth: 1,
           children: [
-            ['vue2.md', 'Vue2'],
+            ['vue.md', 'Vue'],
           ]
         },
         {
