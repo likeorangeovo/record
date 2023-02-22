@@ -47,6 +47,7 @@ module.exports = {
         ariaLabel: '项目开发',
         items: [
           { text: 'git', link: '/pages/develop/git.md' },
+          { text: 'webpack', link: '/pages/develop/webpack.md' }
         ]
       },
       {
@@ -154,6 +155,7 @@ module.exports = {
           sidebarDepth: 1,
           children: [
             ['git.md', 'git'],
+            ['webpack.md', 'webpack'],
           ]
         }
       ],
