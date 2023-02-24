@@ -1,239 +1,4 @@
-## 1-1 js的数据类型有哪些，区别
-
-number，string，boolean，object，undefined，null，symbol，bigint
-
-symbol 代表创建后独一无二的数据类型，解决全局变量冲突问题
-
-bigint可以表示任意精度格式的整数
-
-原始数据类型：undefined，null，boolean，number，string
-
-引用数据类型：对象，数组，函数
-
-前者，存储在栈中，频繁使用
-
-后者，存储在堆中，占据空间大，大小不固定，栈中存储该对象指针，指针指向堆的实体地址
-
-## 1-2 数据类型检测方式
-
-typeof，对象，数组，null会被判断成object，其余类型判断正确
-
-instanceof，判断原型链上是否能找到该类型的原型
-
-```js
-console.log(2 instanceof Number);                    // false
-console.log(new Number(2) instanceof Number); //true
-```
-
-constructor, 判断对象的构造函数
-
-```js
-console.log((2).constructor === Number); // true		
-```
-
-## 1-3 判断数组的方式
-
-```js
-object.__proto__ == Array.prototype
-Array.isArray(obj)
-obj instacneof Array
-```
-
-## 1-4 null 和undefined区别
-
-undefined 未定义，null空值
-
-typeof null //object
-
-## 1-5 instanceof实现原理和实现
-
-```js
-function myinstanceof(left, right){
-	let proto = Object.getPrototypeof(left);
-    let prototype = right.prototype;
-    while(true){
-        if(!proto) return false;
-        if(proto == prototype) return true;
-        proto = Object.getPrototype(proto);
-    }
-}
-```
-
-## 1-6 为什么0.1 + 0.2 != 0.3 
-
-(n1 + n2).toFixed(2)//保留几位小数
-
-js机器精度 Number.EPSILON
-
-```js
-function numberepsilon(arg1,arg2){                   
-  return Math.abs(arg1 - arg2) < Number.EPSILON;        
-}        
-
-console.log(numberepsilon(0.1 + 0.2, 0.3)); // true
-```
-
-
-
-## 1-7 ==操作符的强制类型转换规则
-
-1、首先会判断两者类型是否相同，相同的话就比较两者的大小
-2、类型不相同的话，就会进行[类型转换](https://so.csdn.net/so/search?q=类型转换&spm=1001.2101.3001.7020)
-3、会先判断是否在对比 null 和 undefined ，是的话就返回true
-4、判断两者类型是否为 string 和 number，是的话就会将[字符串](https://so.csdn.net/so/search?q=字符串&spm=1001.2101.3001.7020)转换为number
-5、判断其中一方是否为[boolean](https://so.csdn.net/so/search?q=boolean&spm=1001.2101.3001.7020),是的话就会把 boolean 转为 number 再进行判断
-6、判断其中一方是否为object 且另一方为 string、number、或者symbol，是的话就会把 object 转为原始类型再进行判断
-
-## 1-8 Object.is()和比较运算符的区别
-
-- 使用双等号（==）进行相等判断时，如果两边的类型不一致，则会进行强制类型转化后再进行比较。
-
-- 使用三等号（===）进行相等判断时，如果两边的类型不一致时，不会做强制类型准换，直接返回 false。
-
-- 使用 Object.is 来进行相等判断时，一般情况下和三等号的判断相同，它处理了一些特殊的情况，比如 -0 和 +0 不再相等，两个 NaN 是相等的。
-
-  `Object.is(-0,+0) //false`
-
-## 1-9 new操作符的实现原理
-
-```js
-function mynew(fn,...arg){
-	let obj = {};
-	obj.__proto__ == fn.prototype;
-	let res = fn.apply(obj,arg);
-	return res instanceof Object : res ? obj;
-}
-new 与 Objectcreate的区别
-1.new 只接受 改造函数，后者除构造函数外，还可以接收普通对象
-2.后者传入构造函数 不会继承构造函数的属性，前者传入对象会继承对象的属性
-3.后者可以实现没有原型的空对象
-```
-
-## 1-10 数组常见的原生方法
-
-toString(),toLocalString(),join()
-
-pop(),push(),shifit,unshift()
-
-concat(),slice(),splice(),indexOf(),every(),some()
-
-## 1-11 什么是BOM和DOM
-
-DOM文档对象模型，定义了处理网页内容的方法和接口![image-20220910211558053](./../../.vuepress/public/img/image-20220910211558053.png)
-
-![image-20220910211548312](./../../.vuepress/public/img/image-20220910211548312.png)
-
-BOM，浏览器对象模型，定义了与浏览器进行交互的方法和接口
-
-BOM中的核心对象是 window对象(子对象，document、location、navigator、screen、history、frames)
-
-![image-20220910211309293](./../../.vuepress/public/img/image-20220910211309293.png)
-
-![image-20220910211319181](./../../.vuepress/public/img/image-20220910211319181.png)
-
-![image-20220910211342627](./../../.vuepress/public/img/image-20220910211342627.png)
-
-
-
-## 1-12 对类数组对象的理解，如何转为数组
-
-一个拥有length属性和若干索引属性的对象叫做类数组对象，但不能调用数组的方法
-
-```js
-//转数组的方法
-Array.prototype.slice.call(arraylike)
-Array.prototype.concat.apply([], arrayLike);
-```
-
-## 1-13 对ajax的理解，实现一个ajax请求
-
-1. 创建XMLHttpRequest对象
-
-2. 在该对象上使用open方法创建一个HTTP请求
-
-3. 调用send发送请求
-
-4. 判断相应数据并进行操作
-
-```js
-   let xhr = new XMLHttpRequest();
-   xhr.open('get','http://127.0.0.1',true);
-   xhr.send()
-   xhr.onreadystatechange = function(){
-       if(xhr.readystate === 4){
-           if(xhr.state === '200' || xhr,state === '304'){
-               console.log(xhr.response)
-           }
-           else{
-               console.log(xhr)
-           }
-       }
-   }
-   //promise实现
-   let ajax = (method,url) => {
-       return new Promise((resolve,reject)=>{
-           let xhr = new XMLHttpRequest();
-           xhr.open(method,url);
-           xhr.send();
-           xhr.onreadystatechange = function(){
-               if(xhr.readystate == 4){
-                   if(xhr.state == 200 || xhr.state == 304){
-                       resolve(xhr.response);
-                   }
-                   else{
-                       reject(xhr);
-                   }
-               }
-           }
-       })
-   }
-```
-
-   
-
-## 1-14 js为什么要进行变量提升
-
-js引擎在执行代码有解析过程，创建执行上下文
-
-解析阶段，变量声明为undefined，函数声明好可使用
-
-执行阶段，按照代码顺序执行
-
-变量提升原因：
-
-1.提高性能，仅需执行一次语法检查和预编译，避免每次执行代码前都要重新解析变量/函数
-
-2.容错性好，可以先使用后定义变量
-
-缺陷，会对全局变量的输出造成影响
-
-```js
-var tmp = new Date();
-
-function fn(){
-	console.log(tmp);
-	if(false){
-		var tmp = 'hello world';
-	}
-}
-
-fn();  // undefined
-```
-
-## 1-15 let const var区别
-
-1. 块级作用域：由{}包括，let const 有块级作用域，解决ES5中的问题，内层变量覆盖外部变量，循环变量泄露为全局变量
-2. 变量提升，var存在变量提升
-3. 暂时性死区，let const,在声明前均不可使用，存在暂时性死区
-4. 重复声明，var重复声明变量，后者可覆盖前者，let const不允许
-
-## 1-16 箭头函数和普通函数的区别
-
-1. 箭头函数没有自己的this，只会在自己作用域上一层继承this
-2. 箭头函数的this在定义时确定，且不会改变
-3. 箭头函数不能做为构造函数使用，this无法用call改变，没有prototype属性
-
-## 1-17 对原型和原型链的理解
+## 对原型和原型链的理解
 
 原型包含了可以由该构造函数的所有实例共享的属性和方法
 
@@ -241,7 +6,7 @@ fn();  // undefined
 
 
 
-## 1-18 原型链的指向
+## 原型链的指向
 
 ```js
 p.__proto__  // Person.prototype
@@ -253,7 +18,7 @@ p1.__proto__.constructor // Person
 Person.prototype.constructor  // Person
 ```
 
-## 1-19 对promise的理解
+## 对promise的理解
 
 解决异步编程的一种方案，解决了回调地狱问题
 
@@ -261,7 +26,7 @@ Person.prototype.constructor  // Person
 
 promise是一个构造函数，接受一个函数作为参数，返回一个promise实例
 
-## 1-20 promise的基本用法
+## promise的基本用法
 
 创建promise对象;
 
@@ -351,7 +116,7 @@ promise
 .finally(() => {···});
 ```
 
-## 1-21 async和await的理解
+## async和await的理解
 
 async：
 
@@ -363,7 +128,7 @@ await：
 
 如果是promise对象，await阻塞后面的代码(并且暂停async的执行)，等待promise对象resolve
 
-## 1-22 async和await对promise的优势
+## async和await对promise的优势
 
 具有依赖的异步代码会更加清晰
 
@@ -379,7 +144,7 @@ async function fn(){
 }
 ```
 
-## 1-23 对闭包的理解
+## 对闭包的理解
 
 闭包指有权访问另一个作用域中变量的函数
 
@@ -422,7 +187,7 @@ function hd1(){
   tem1();//5
 ```
 
-## 1-24 对作用域 作用域链的理解
+## 对作用域 作用域链的理解
 
 1. 全局作用域
 
@@ -447,13 +212,13 @@ function hd1(){
 4. 作用域链
 	在当前作用域中找所需变量，没有则去父级作用域找，直到window对象为止
 
-## 1-25 对执行上下文的理解
+## 对执行上下文的理解
 
 在执行一点JS代码之前，需要先解析代码。解析的时候会先创建一个全局执行上下文环境，先把代码中即将执行的变量、函数声明都拿出来，变量先赋值为undefined，函数先声明好可使用。这一步执行完了，才开始正式的执行程序。
 
 在一个函数执行之前，也会创建一个函数执行上下文环境，跟全局执行上下文类似，不过函数执行上下文会多出this、arguments和函数的参数。
 
-## 1-26 对this对象的理解
+## 对this对象的理解
 
 this 是执行上下文中的一个属性，它指向最后一次调用这个方法的对象。
 
@@ -462,66 +227,12 @@ this 是执行上下文中的一个属性，它指向最后一次调用这个方
 - 第三种是**构造器调用模式**，如果一个函数用 new 调用时，函数执行前会新创建一个对象，this 指向这个新创建的对象。
 - 第四种是 **apply 、 call 和 bind 调用模式**，这三个方法都可以显示的指定调用函数的 this 指向。其中 apply 方法接收两个参数：一个是 this 绑定的对象，一个是参数数组。call 方法接收的参数，第一个是 this 绑定的对象，后面的其余参数是传入函数执行的参数。也就是说，在使用 call() 方法时，传递给函数的参数必须逐个列举出来。bind 方法通过传入一个对象，返回一个 this 绑定了传入对象的新函数。这个函数的 this 指向除了使用 new 时会被改变，其他情况下都不会改变。
 
-## 1-27 call和apply的区别
+##  call和apply的区别
 
 作用一模一样，区别仅在于传入参数的形式的不同。
 
-## 1-28 实现call apply bind
+## 实现call apply bind
 
-## 1-29 浏览器的垃圾回收机制
+## 浏览器的垃圾回收机制
 
-## 2-1 typeof null 结果是什么 为什么
-
-## 2-2 isNaN和Number.isNaN函数的区别
-
-## 2-3 其他值到字符串，数字，布尔值的转换规则
-
-## 2-4 js中如何进行隐式的数据转换
-
-## 2-5 map和Object的区别
-
-## 2-6 js脚本延迟的方式有哪些
-
-## 2-7 js类数组对象的定义
-
-## 2-8 函数的argument参数是类数组而不是数组，如何遍历数组
-
-## 2-9 ES6和CommonJS模块的异同
-
-## 2-10 如何判断一个对象属于某个类
-
-## 2-11 for in 和for of 区别
-
-## 2-12 数组遍历的方法有哪些
-
-## 2-13 foreach和map方法有什么不同
-
-## 2-14 const对象可以更改吗
-
-## 2-15 new一个箭头函数会怎样
-
-## 2-16 箭头函数的this指向哪里
-
-## 2-17 对 rest 参数的理解
-
-## 2-18 ES6模板语法和字符串的处理
-
-## 2-19 原型的修改重写
-
-## 2-20 异步编程的方式
-
-## 2-21 settimeout Promise async/await的区别
-
-## 2-22 promise解决了什么问题
-
-## 2-23 promise.all promise.race区别和使用场景
-
-## 2-24 await在等什么
-
-## 2-25 async/await的优势
-
-## 2-26 对象创建方式有哪些
-
-## 2-27 对象继承方式有哪些
-
-## 2-28 哪些情况会导致内存泄露
+## 哪些情况会导致内存泄露

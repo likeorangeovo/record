@@ -1,125 +1,337 @@
 # VUE
 
-## 1-1 Vue基本原理
+## Vue基本原理
 
-## 1-2 双向数据绑定原理
+![image-20230223201736329](../../.vuepress/public/img/image-20230223201736329.png)
 
-## 1-3 MVVM MVC MVP的区别
+MVVM模型，视图和数据模型由viewmodel层进行双向数据绑定 ，尽可能少的手动操作dom。
 
-##  1-4 computed 和 watch 的区别
+1. **Observer(数据劫持)**，将一个普通的js对象传入vue实例作为data选项，vue会遍历该对象的所有property，并使用Obeject.defineProperty()为这些property添加getter/setter进行数据劫持。每当数据变化会通知**Dep**
+2. **Dep(发布者dependence)**，统一管理订阅者，接收到数据变化后，用来通知所有订阅该数据的Watcher
+3. Watcher(**订阅者**)，接受属性变化并执行相应的函数update()，并触发Compile中的回调
+4. **Compile(编译)**，解析虚拟dom树中的vue指令，解析完成后为数据添加Watcher，监听初始化及其变化，最后通过回调函数更改dom数据
+```js
+<div id="demo">
+  <div>{{name}}</div>
+  <div>{{address}}</div>
+</div>
+<script type="text/javascript">
+  let person = {
+    'sex':'girl',
+    'name':'晓甜甜',
+    'address':'XXX公寓',
+    'parent':{
+      'father':'小明',
+      'mother':'李红'
+    }
+  }
+  //监听数据对象的所有属性值
+  function observe(data){
+    if(!data||typeof(data)!=='object'){
+      return
+    }
+    // Object.keys(data) 和 for...in的遍历差不多，该函数返回一个对象包含的所有属性的数组
+    Object.keys(data).forEach((key)=>{
+      dataHijacking(data,key,data[key]) //用数据劫持改写get和set方法
+    })
+  }
+ 
+  function dataHijacking(obj,prop,val){
+    observe(val) //递归监听
+    let dep = new dependence()
+    Object.defineProperty(obj,prop,{
+      enumerable: true,
+      configurable: true,
+      get:function(){
+        if(dependence.target){
+          dep.addwatcher(dependence.target) //通过触发get回调添加订阅者watcher
+        }
+        return val
+      },
+      set:function(newVal){
+        if(val === newVal){
+          return
+        }
+        val = newVal
+        dep.notify() //数据更新时通过依赖函数通知所有订阅者
+      }
+    })
+  }
+ 
+  // 依赖，用于联系watcher和observer
+  function dependence(){
+    this.watchers = [] //用一个数组用于存储watcher
+  }
+  dependence.prototype = {
+    addwatcher:function(watcher){
+      this.watchers.push(watcher)
+    },
+    notify:function(){
+      this.watchers.forEach((watcher)=>{
+        watcher.update() //通知所有订阅者触发更新函数
+      })
+    }
+  }
+  dependence.target = null
+ 
+  function watcher(vm,key,callback){
+    this.callback = callback //执行回调，这里可以动态操作相关dom
+    this.vm = vm  //这个参数一般会保留全局的vm，用于访问data
+    this.key = key //确定自己是哪个数据的订阅者
+    this.value = this.get() //通过调用这个方法将自己添加到依赖数组中去，同时缓存旧值
+  }
+  watcher.prototype = {
+    update:function(){
+      let value = this.vm.data[this.key] //一般我们都会操作实例vue上挂载的data
+      let oldVal = this.value //初始化时候的旧值
+      if(oldVal!==value){
+        //如果这两个值不相等，才触发回调，也就是dom操作，这有利于优化性能
+        this.value = value
+        this.callback.call(this.vm, value, oldVal)
+      }
+    },
+    get:function(){
+      dependence.target = this //将自己缓存，准备添加到依赖中去
+      let value = this.vm.data[this.key] //这个操作会触发observe的get
+      dependence.target = null // 释放自己
+      return value
+    }
+  }
+ 
+  function compile(el,vue){
+    this.vm = vue
+    this.compileElement(el)
+  }
+  compile.prototype = {
+    compileElement:function(el){
+      var childNodes = el.childNodes;
+      var self = this;
+      [].slice.call(childNodes).forEach(function(node) {
+        var reg = /\{\{(.*)\}\}/;
+        var text = node.textContent;
+        if (self.isTextNode(node) && reg.test(text)) {  // 判断是否是符合这种形式{{}}的指令
+          self.compileText(node, reg.exec(text)[1]);
+        }
+        if (node.childNodes && node.childNodes.length) {
+          self.compileElement(node);  // 继续递归遍历子节点
+        }
+      });
+    },
+    compileText:function(node, exp) {
+      var self = this;
+      var initText = this.vm[exp];
+      this.updateText(node, initText);  // 将初始化的数据初始化到视图中
+      new watcher(this.vm, exp, function (value) {  // 生成订阅器并绑定更新函数
+        self.updateText(node, value);
+      });
+    },
+    updateText:function (node, value) {
+      node.textContent = typeof value == 'undefined' ? '' : value;
+    },
+    isTextNode: function (node) {
+      return node.nodeType === 3
+    }
+  }
+  
+ 
+  function mvvm(data,el){
+    let self = this
+    this.data = data
+    observe(data)
+    Object.keys(data).forEach(function(key) {
+        self.proxyKeys(key)  // 绑定代理属性
+    })
+    new compile(el,this)
+    return this //返回实例，主要是为了可供全局查看当前实例
+  }
+  
+  mvvm.prototype = {
+    proxyKeys:function(key){
+      let self = this
+      Object.defineProperty(this,key,{
+        enumerable: false,
+        configurable: true,
+        get: function proxyGetter() {
+            return self.data[key]
+        },
+        set: function proxySetter(newVal) {
+            self.data[key] = newVal
+        }
+      })
+    }
+  }
+ 
+  let el = document.getElementById('demo')
+  let vm = new mvvm(person,el)
+  setTimeout(function(){
+    vm.name = '饭甜甜'
+  },2000)
+</script>
+```
 
-## 1-5 v-if 和 v-show的区别
+## 双向数据绑定原理
 
-## 1-6 data为什么是一个函数而不是一个对象
+Vue.js 是采用**数据劫持**结合**发布者-订阅者模式**的方式，通过Object.defineProperty()来劫持各个属性的setter，getter，在数据变动时发布消息给订阅者，触发相应的监听回调。
 
-## 1-7 Vue单页应用和多页应用的区别
+```js
+Object.defineproperty(obj,prop,desc)   
+1 obj     需要定义属性的当前对象
+2 prop    当前需要定义的属性名
+3 desc    描述符 一般是一个对象
 
-## 1-8 对React和vue的理解 异同？
+var book = {
+    _year : 2004,
+    edition : 1
+}
+Object.defineProperty(book,"year",{
+    
+    enumerable:true, //控制属性是否可以枚举，默认值是false
+    writable:true, //控制属性是否可以被修改，默认值是false
+    configurable:true //控制属性是否可以被删除，默认值是false
+    
+    get: function(){
+        return this._year
+    },
+    set: function(newYear){
+        if(newYear > 2004){
+            this._year = newYear;
+            this.edition += newYear - 2004
+        }
+    }
 
-## 1-9 vue的优点
+})
+```
 
-## 1-10 对SPA单页应用的理解，优缺点
+## 组件通讯方式有哪些
 
-## 1-11 Vue的生命周期
+组件通信的方式如下：
 
-## 1-12 组件通讯方式有哪些
+1. props  /  $emit
 
-## 1-13 路由hash和history的区别
+父组件通过`props`向子组件传递数据，子组件通过`$emit`和父组件通信
 
-## 1-14 对前端路由的理解
+```js
+// 父组件
+<template>
+  <div class="section">
+    <com-article :articles="articleList" @onEmitIndex="onEmitIndex"></com-article>
+    <p>{{currentIndex}}</p>
+  </div>
+</template>
 
-## 1-15 Vuex的原理和理解
+<script>
+import comArticle from './test/article.vue'
+export default {
+  name: 'comArticle',
+  components: { comArticle },
+  data() {
+    return {
+      currentIndex: -1,
+      articleList: ['红楼梦', '西游记', '三国演义']
+    }
+  },
+  methods: {
+    onEmitIndex(idx) {
+      this.currentIndex = idx
+    }
+  }
+}
+</script>
 
-Vuex 是一个专为 Vue.js 应用程序开发的状态管理模式。每一个 Vuex 应用的核心就是 store（仓库）。“store” 基本上就是一个容器，它包含着你的应用中大部分的状态 ( state )。
+//子组件
+<template>
+  <div>
+    <div v-for="(item, index) in articles" :key="index" @click="emitIndex(index)">{{item}}</div>
+  </div>
+</template>
 
-包含：state、getters（相当于computed）、mutations、actions、modules
+<script>
+export default {
+  props: ['articles'],
+  methods: {
+    emitIndex(index) {
+      this.$emit('onEmitIndex', index) // 触发父组件的方法，并传递参数index
+    }
+  }
+}
+</script>
+```
 
-使用区别：mutations中可以放入函数，actions也可以放入函数，但是一般我们在mutations中放入函数而actions是提交mutations
+2. eventBus事件总线（`$emit / $on`）
+`eventBus`事件总线适用于**父子组件**、**非父子组件**等之间的通信，使用步骤如下： 1.创建事件中心管理组件之间的通信 2.在firstCom组件中发送事件 3. 接收事件 在secondCom组件中发送事件
+```js
+// event-bus.js
+import Vue from 'vue'
+export const EventBus = new Vue()
 
-## 1-16 Redux 和vuex 区别共同点
+//main.js
+<template>
+  <div>
+    <first-com></first-com>
+    <second-com></second-com>
+  </div>
+</template>
 
-## 1-17 vue3.0更新
+<script>
+import firstCom from './firstCom.vue'
+import secondCom from './secondCom.vue'
+export default {
+  components: { firstCom, secondCom }
+}
+</script>
 
-## 1-18 defineProperty和proxy的区别
+//firstCom.js
+<template>
+  <div>
+    <button @click="add">加法</button>    
+  </div>
+</template>
 
-## 1-19 对虚拟dom的理解
+<script>
+import {EventBus} from './event-bus.js' // 引入事件中心
 
-## 1-20 diff算法原理
+export default {
+  data(){
+    return{
+      num:0
+    }
+  },
+  methods:{
+    add(){
+      EventBus.$emit('addition', {
+        num:this.num++
+      })
+    }
+  }
+}
+</script>
 
-## 1-21 ref 是干什么的
+//secondCom.js
+<template>
+  <div>求和: {{count}}</div>
+</template>
 
-在普通元素上，可以获取到dom元素
+<script>
+import { EventBus } from './event-bus.js'
+export default {
+  data() {
+    return {
+      count: 0
+    }
+  },
+  mounted() {
+    EventBus.$on('addition', param => {
+      this.count = this.count + param.num;
+    })
+  }
+}
+</script>
 
-加在子组件上，可以获取到组件实例及其方法
+```
 
-## 1-22 computed、methods、watch区别
+3. ### ref / $refs
 
-computed:计算属性
+## diff算法原理
 
-监听某些数据的变化，有缓存，在需要的时候进行更新
+## vue3与vue2
 
-methods：挂载在对象上的函数
-
-没有缓存，进入页面调用会触发
-
-watch：监听（路由和数据）
-
-数据发生改变时会触发，可以得到过去的值和现在的值
-
-## 1-23 slot插槽
-
-父组件可以在子组件中插入内容
-
-## 2-1 使用Object.defineProperty()来进行数据劫持有什么缺点
-
-## 2-2 slot是什么，有什么作用，原理是什么
-
-## 2-3 如何保存当前页面的状态
-
-## 2-4 常见的事件修饰符及其作用
-
-## 2-5 v-if v-show v-html的原理
-
-## 2- 6 对keep-alive的理解，是如何实现的，具体缓存的是什么
-
-## 2-7 vue中封装的数组方法有哪些，如何实现页面更新
-
-## 2-8 vue template 到render的过程
-
-## 2-9 vue data中某一个属性值发生变化后，视图会立刻同步执行重新渲染吗
-
-## 2-10 vue如何监听对象或数组某个属性的变化
-
-## 2-11 Vue模板编译原理
-
-## 2-12 对SSR的理解
-
-## 2-13 Vue 性能优化有哪些
-
-## 2-14 MVVM的优缺点
-
-## 2-15 created和mounted的区别
-
-## 2-16 一般会在哪个生命周期请求异步数据
-
-## 2-17 keep-alive 与生命周期
-
-## 2-18 如何获取页面的hash变化
-
-## 2-19 $route 和$router 的区别
-
-## 2-20 params和query的区别
-
-## 2-21 vuex和localstorage的区别
-
-## 2-22 为什么要使用vuex和redux
-
-## 2-23vuex有哪几种属性
-
-## 2-24 vue3为什么要用proxy
-
-## 2-25 虚拟dom的解析过程
-
-## 2-26 虚拟dom对比真实dom性能好吗
-
-## 2-27 vue中key的作用

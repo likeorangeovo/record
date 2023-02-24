@@ -30,6 +30,7 @@ module.exports = {
           { text: 'CSS', link: '/pages/frontend/css.md' },
           { text: 'Vue', link: '/pages/frontend/vue.md' },
           { text: '浏览器', link: '/pages/frontend/browser.md' },
+          { text: '原理汇总', link: '/pages/frontend/collect.md' },
         ]
       },
       {
@@ -121,10 +122,18 @@ module.exports = {
         },
         {
           title: '浏览器',
-          collapsable: true,
+          collapsable: false,
           sidebarDepth: 1,
           children: [
             ['browser.md', '浏览器'],
+          ]
+        },
+        {
+          title: '原理汇总',
+          collapsable: true,
+          sidebarDepth: 2,
+          children: [
+            ['collect.md', '原理汇总'],
           ]
         },
 
