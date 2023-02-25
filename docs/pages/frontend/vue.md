@@ -1,4 +1,4 @@
-# VUE
+# Vue
 
 ## Vue基本原理
 
@@ -169,7 +169,7 @@ MVVM模型，视图和数据模型由viewmodel层进行双向数据绑定 ，尽
 </script>
 ```
 
-## 双向数据绑定原理
+### 双向数据绑定原理
 
 Vue.js 是采用**数据劫持**结合**发布者-订阅者模式**的方式，通过Object.defineProperty()来劫持各个属性的setter，getter，在数据变动时发布消息给订阅者，触发相应的监听回调。
 
@@ -202,7 +202,7 @@ Object.defineProperty(book,"year",{
 })
 ```
 
-## 组件通讯方式有哪些
+## Vue中的组件通讯方式
 
 组件通信的方式如下：
 
@@ -331,7 +331,7 @@ export default {
 
 3. ### ref / $refs
 
-## diff算法原理
+## Vue中的diff算法
 
-## vue3与vue2
+## Vue3
 

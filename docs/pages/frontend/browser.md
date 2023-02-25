@@ -1,6 +1,35 @@
-## 浏览器渲染
+## 浏览器运行
 
-### 渲染流程
+### 浏览器的组成
+
+了解浏览器的运行，首先要先了解浏览器的组成。浏览器由`shell`(命令解析代理，简单来说就是`代理用户对内核的操作`)和浏览器`内核`组成。
+
+shell 组成：
+
+- 用户界面：除浏览器请求的页面以外，都属于用户界面。
+- 网络：用于网络请求，包含多种文件传输协议，如HTTP、FTP等。
+- UI后端：用于绘制''对话框''等基本组件。
+- JS解释器：解释并执行网页中的javascript代码
+- XML解析器：将XML文档解析成文档对象模型(DOM)
+- 数据存储：将浏览器数据存储在硬盘上
+
+内核组成：
+- 浏览器引擎：为渲染引擎提供高级接口
+
+- 渲染引擎：负责显示请求的内容。负责解析请求到的HTML、CSS 并将其显示
+
+### 浏览器中的进程
+
+除了浏览器的组成，在谈到一段程序在计算机中的运行时，那必须提到`进程`的概念
+
+**进程**：
+
+### 浏览器的网络请求
+
+
+
+
+### 浏览器的渲染过程
 
 ![image-20220809223355017](./../../.vuepress/public/img/image-20220809223355017.png)
 
@@ -24,77 +53,27 @@
 
 将渲染树绘制
 
-### load和DomContentload事件
+#### load和DomContentload事件
 
 load：在所有资源加载完成后触发
 
 domcontentload：在html被**解析完成**后触发
 
-### js和css对渲染的影响
+#### js和css对渲染的影响
 
 js会阻碍DOM树生成，阻碍图片，js，css等资源的加载
 
 css会阻塞CSSOM生成，阻碍页面渲染，阻碍js**执行**
 
-## web-worker
+### 浏览器的同源策略
 
-运行在后台的js，独立与其他脚本，不影响页面的性能
+### 浏览器的安全
 
-使用方法
+### 浏览器的存储
 
-````js
-//主线程
-let worker = new worker('work.js')
-//向worker发送信息
-worker.onMessage('msg')
-//关闭
-worker.terminate()
-//处理err事件
-worker.onerror(function(event){
-})
-````
-```js
-//work.js 
-//监听数据传输
-onmessage = function(e){
-	const res = e
-	//postMessage前是需要通讯的window对象，接收参数第一个时传输的数据，第二个是目标窗口的源，设置为*则可以传给任意窗口
-	postMessage('okk')
-}
-```
+### 浏览器的垃圾回收机制
 
-## html 离线存储怎么用
+### 番外：抽象语法树的编译
 
-在没有联网时，可以正常访问站点
 
-基于一个新建的.appcache文件的缓存技术，将离线存储资源存储下来
-
-使用方法：
-
-```html
-//创建一个和html同名的manifest文件，在页面头部加入manifest属性
-<html lang="en" manifest="index.manifest">
-//在index.manifest文件中编写需要理想存储的资源
-CACHE MANIFEST
-    #v0.11
-    CACHE:
-    js/app.js
-    css/style.css
-    NETWORK:
-    resourse/logo.png
-    FALLBACK:
-    / /offline.html
-```
-
-更新缓存的方法：
-
-更新manifest文件，通过js操作，清除浏览器缓存
-
-离线存储的管理逻辑：
-
-联网时，发现manifest属性，请求manifest文件，将文件内对应的资源进行存储。
-
-若已经存储，则将新旧manifest文件对比，更新缓存
-
-离线时：直接使用缓存中的资源
 
