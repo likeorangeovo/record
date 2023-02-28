@@ -22,12 +22,12 @@ module.exports = {
       { text: '首页', link: '/' },
       //添加下拉菜单
       {
-        text: '前端',  //默认显示        
-        ariaLabel: '前端',  //用于识别的label
+        text: '前端开发',  //默认显示        
+        ariaLabel: '前端开发',  //用于识别的label
         items: [
           { text: 'JavaScript', link: '/pages/frontend/javascript.md' },
           //点击标签会跳转至link的markdown文件生成的页面
-          { text: 'CSS', link: '/pages/frontend/css.md' },
+          { text: 'Css', link: '/pages/frontend/css.md' },
           { text: 'Vue', link: '/pages/frontend/vue.md' },
           { text: '浏览器', link: '/pages/frontend/browser.md' },
           { text: '原理汇总', link: '/pages/frontend/collect.md' },
@@ -64,68 +64,27 @@ module.exports = {
     sidebar: {
       '/pages/cs/': [
         {
-          title: '数据结构与算法',   // 一级菜单名称
+          title: '计算机基础',   // 一级菜单名称
           collapsable: true, // false为默认展开菜单, 默认值true是折叠,
           sidebarDepth: 1,    //  设置侧边导航自动提取markdown文件标题的层级，默认1为h2层级
           children: [
             ['dataStructure.md', '数据结构与算法'], //菜单名称为'子菜单1'，跳转至/pages/folder1/test1.md
-          ]
-        },
-        {
-          title: '计算机网络',
-          collapsable: true,
-          children: [
-            ['network.md', '网络']
-          ]
-        },
-        {
-          title: 'cpp',
-          collapsable: true,
-          sidebarDepth: 1,
-          children: [
+            ['network.md', '网络'],
             ['cpp.md', 'C++'],
-          ]
-        },
-        {
-          title: 'csapp读书笔记',
-          collapsable: true,
-          sidebarDepth: 1,
-          children: [
-            ['csapp.md', 'csapp'],
+            ['csapp.md', 'CSAPP'],
           ]
         },
       ],
       '/pages/frontend/': [
         {
-          title: 'JavaScript',
+          title: '前端开发',
           collapsable: true,
           sidebarDepth: 1,
           children: [
             ['javascript.md', 'JavaScript'],
-          ]
-        },
-        {
-          title: 'CSS',
-          collapsable: true,
-          sidebarDepth: 1,
-          children: [
-            ['css.md', 'CSS'],
-          ]
-        },
-        {
-          title: 'Vue',
-          collapsable: true,
-          sidebarDepth: 1,
-          children: [
+            ['css.md', 'Css'],
             ['vue.md', 'Vue'],
-          ]
-        },
-        {
-          title: '浏览器',
-          collapsable: false,
-          sidebarDepth: 1,
-          children: [
-            ['browser.md', '浏览器'],
+            ['browser.md', '浏览器']
           ]
         },
         {
@@ -133,10 +92,9 @@ module.exports = {
           collapsable: true,
           sidebarDepth: 2,
           children: [
-            ['collect.md', '原理汇总'],
+            ['collect.md', '原理汇总']
           ]
         },
-
       ],
       '/pages/life/': [
         {
@@ -165,6 +123,7 @@ module.exports = {
           children: [
             ['git.md', 'git'],
             ['webpack.md', 'webpack'],
+            ['design.md', '设计模式'],
           ]
         }
       ],
