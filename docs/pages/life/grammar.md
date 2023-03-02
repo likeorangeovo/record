@@ -72,7 +72,7 @@
 
 **过去将来**（常出现在从句中）
 
-1. 一般过去将来时：，助动词would + 动词原型
+1. 一般过去将来时：you would eat carrots，助动词would + 动词原型
 
 2. 过去将来进行时：you would be eating carrots，助动词would + be + 现在分词
 
@@ -82,12 +82,50 @@
 ## 动词语气
 
 1. 陈述语气：描述现实
+
 2. 祈使语气：命令/请求，用一般现在时，用第二人称，去掉“你”，并保证动词原型
-3. 虚拟语气：表示主观意愿
-   1. 和现在事实相反：条件句用过去式，主句用would + 动原，if i knew it，i would tell you
-   2. 和将来事实相反：条件句用should/were to + 动原，主句用would/should/could/might + 动原，if i should meet you thee after long years, how should i greet thee
-   3. 和过去事实相反：条件句had+过去分词，主句would have + 动词过去分词
 
+3. 虚拟语气：表示主观意愿(`时态后退原则`)
 
+   - 表“不可能”假设
 
-   
+   1. 和**现在**事实相反：
+
+      条件句：过去式 ，主句：would + 动原
+
+      if i knew it，i would tell you
+
+   2. 和**将来**事实相反：
+
+      条件句：should/were to + 动原，主句：would/should/could/might + 动原
+
+      if i should see the rabbit tomorrow,i would bite him
+
+   3. 和**过去**事实相反：
+
+      条件句：had+过去分词，主句：would have + 动词过去分词
+
+      if i had seen the rabbit a few days ago, i would have bitten him
+
+   - 表达愿望请求建议命令等
+
+   1. 对现在的希望
+
+      wish + 过去式
+
+      i wish you were here
+
+   2. 对过去的希望
+
+      wish + had/would have + 过去分词
+
+      i wish that i had eaten the carrot
+
+   3. 对将来的希望
+
+      wish + would/should/could + 动原
+
+      i wish that i could eat the carrot
+
+## 非谓语动词
+
