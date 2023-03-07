@@ -89,23 +89,23 @@
 
    - 表“不可能”假设
 
-   1. 和**现在**事实相反：
+   1. 和**过去**事实相反：
 
-      条件句：过去式 ，主句：would + 动原
+      条件句：had + 过去分词，主句：would/should/could/might + have + 动词过去分词
+
+      if i had seen the rabbit a few days ago, i would have bitten him
+
+   2. 和**现在**事实相反：
+
+      条件句：过去式 ，主句：would/should/could/might + 动原
 
       if i knew it，i would tell you
 
-   2. 和**将来**事实相反：
+   3. 和**将来**事实相反：
 
       条件句：should/were to + 动原，主句：would/should/could/might + 动原
 
       if i should see the rabbit tomorrow,i would bite him
-
-   3. 和**过去**事实相反：
-
-      条件句：had+过去分词，主句：would have + 动词过去分词
-
-      if i had seen the rabbit a few days ago, i would have bitten him
 
    - 表达愿望请求建议命令等
 
@@ -129,3 +129,104 @@
 
 ## 非谓语动词
 
+非谓语动词：不受主语限制，不被限定的动词，可以充当除谓语动词以外的其他成分
+
+非谓语动词包括：动词不定式，动名词，现在分词，过去分词
+
+1. 动词不定式
+
+   做主语：
+
+    To eat a carrot every day is good for rabbit
+
+   做表语：
+
+   My wish is to visit London next year
+
+   做宾语：
+
+   The rabbit likes to eat carrots
+
+   做宾补：
+
+   I consider it important to eat a carrot every day
+
+   感官动词(使役动词)：5看3使2听1感觉，后用不定式做宾补时，忽略to
+
+   look,see,watch,notice,observe/have,make,let/hear,listhen/feel
+
+   做定语：
+
+   The rabbit has a lot of carrots to eat
+
+   做状语：
+
+   I was superised to get a thumbs-up
+
+2. 动名词(相当于名词)
+
+   做主语：
+
+   Eating carrots is healthy for the rabbit
+
+   做表语：
+
+   The rabbit‘s hobby is growing carrots
+
+   做定语：
+
+   a sleeping pill
+
+   做宾语：
+
+   The rabbit likes eating carrots
+
+   以下动词只能用动名词：
+
+   enjoy，avoid，advise，consider，escape，mind，practice，insist on，give up， feel like，put off
+
+   不定式和动名词做宾语的区别：
+
+   to do 表示未做，doing 表示做过
+
+3. 现在分词(相当于形容词)
+
+   动名词和现在分词的区别：
+
+   a sleeping pill = a pill for sleeping 动名词，说明性质
+
+   a sleeping rabbit  相当于形容词，修饰兔子的状态
+
+   做表语：
+
+   the rabbit is charming
+
+   做宾补：
+
+   the wolf saw the rabbit eating a carrot
+
+   现在分词和不定式做宾补的区别：
+
+   前者表示动作的进行状态，后者表示动作已经发生
+
+   做状语：
+
+   Hearing the news，the rabbit bacome excited
+
+4. 过去分词(相当于形容词)
+
+   做表语：
+
+   the rabbit is interested in growing carrots
+
+   做宾补：
+
+   the rabbit found his carrot stolen
+
+   做状语：
+
+   Seen from the hill，the carrot field looks beautiful
+
+   现在分词与过去分词的区别：
+
+   主语与动作之间的主动(描述动作的实施者)与被动(描述动作接受者)关系，主动用现在分词，被动用过去分词
