@@ -45,7 +45,7 @@
 | PART-4 |||
 | bosom 胸 |breast/chest|brest|
 | diploma 毕业证书 |certificate||
-| dramatic 戏剧的 |drama||
+| dramatic 戏剧的 |drama|drastic|
 | fumes 烟 |strong strange automobile exhaust choked||
 | hurrah 好哇 |approval 赞成||
 | miniature 微缩模型 |museum scale 天平||
@@ -76,4 +76,33 @@
 |urgent|demanding immediate action/imminent|agent/agency|
 |PART-2|||
 |alert|||
+
+## lesson 6
+|word|correlation(相关)|analogue(相似)|
+|:--:|:--:|:--:|
+|PART-1|||
+| avenue 大街 | road |         |
+| bestow 给予 | confer授予/grant/present to | |
+| birm 边 沿 | the edge of a cup | |
+| drastic 激烈的 | extreme极端的/thorough彻底的/violent激情的/intense | through |
+| insight洞察力 | penetration渗透进入 | sight |
+| plea 恳求 | appeal上诉 | |
+| prestige声望 | reputation声望 | |
+| ripple涟漪 | wave波动 | |
+| shrill 尖锐的 | sharp | |
+| stray 迷路 | wander流浪走散/rove流浪 | straggle掉队 |
+| trend 趋势 | general course通识课程/inclination倾向 | tendency |
+| wreath 花环 | twist弯曲/garland花环 | |
+| PART-2 | | |
+| abstract 抽象的 | concrete有形的 | |
+| accumulate 积累 | amass积累/scatter散开 | |
+| ample 充足的 广大的 | abundant大量的/extensive广大的/scanty不足的 | |
+| corrupt 贪污的 | rotten腐烂的/conscientious认真的 | |
+| extinct灭绝的 | existent存在的 | |
+| illuminate 照亮 | darken变黑 | |
+| incredible 难以置信的 |                  believable可信的                  |                |
+|      lament 哀悼      |       mourn哀悼/weep哭泣/sorrow悲伤/rejoice        |                |
+|    profound 深奥的    |                    shallow 浅的                    |                |
+|  systematic 有系统的  |                  disorderly杂乱地                  |                |
+|     vivid 鲜明的      |                     dull无聊的                     | |
 
