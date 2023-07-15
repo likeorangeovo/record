@@ -3,7 +3,7 @@
  * @Author: likeorange
  * @Date: 2022-11-12 09:25:14
  * @LastEditors: likeorange
- * @LastEditTime: 2022-11-12 10:45:19
+ * @LastEditTime: 2023-06-08 23:03:32
  */
 module.exports = {
   title: '青山小站',
@@ -30,7 +30,6 @@ module.exports = {
           { text: 'Css', link: '/pages/frontend/css.md' },
           { text: 'Vue', link: '/pages/frontend/vue.md' },
           { text: '浏览器', link: '/pages/frontend/browser.md' },
-          { text: '原理汇总', link: '/pages/frontend/collect.md' },
         ]
       },
       {
@@ -40,7 +39,6 @@ module.exports = {
           { text: '计算机网络', link: '/pages/cs/network.md' },
           { text: '数据结构', link: '/pages/cs/dataStructure.md' },
           { text: 'CPP', link: '/pages/cs/cpp.md' },
-          { text: 'CSAPP', link: '/pages/cs/csapp.md' },
         ]
       },
       {
@@ -48,14 +46,15 @@ module.exports = {
         ariaLabel: '项目开发',
         items: [
           { text: 'git', link: '/pages/develop/git.md' },
-          { text: 'webpack', link: '/pages/develop/webpack.md' }
+          { text: 'webpack', link: '/pages/develop/webpack.md' },
+          { text: '设计模式', link: '/pages/develop/design.md' }
         ]
       },
       {
         text: '岁月冗长',
         ariaLabel: '岁月冗长',
         items: [
-          { text: 'English Studies', link: '/pages/life/english.md' },
+          { text: 'English Studies', link: '/pages/life/grammar.md' },
           { text: 'Life Record', link: '/pages/life/record.md' },
         ]
       }
@@ -68,10 +67,9 @@ module.exports = {
           collapsable: true, // false为默认展开菜单, 默认值true是折叠,
           sidebarDepth: 1,    //  设置侧边导航自动提取markdown文件标题的层级，默认1为h2层级
           children: [
-            ['dataStructure.md', '数据结构与算法'], //菜单名称为'子菜单1'，跳转至/pages/folder1/test1.md
-            ['network.md', '网络'],
             ['cpp.md', 'C++'],
-            ['csapp.md', 'CSAPP'],
+            ['dataStructure.md', '数据结构与算法'], //菜单名称为'子菜单1'，跳转至/pages/folder1/test1.md
+            ['network.md', '计算机网络'],
           ]
         },
       ],
@@ -87,14 +85,6 @@ module.exports = {
             ['browser.md', '浏览器']
           ]
         },
-        {
-          title: '原理汇总',
-          collapsable: true,
-          sidebarDepth: 2,
-          children: [
-            ['collect.md', '原理汇总']
-          ]
-        },
       ],
       '/pages/life/': [
         {
@@ -102,7 +92,6 @@ module.exports = {
           collapsable: true,
           sidebarDepth: 1,
           children: [
-            ['english.md', '学英语！'],
             ['grammar.md', '语法基础'],
           ]
         },
