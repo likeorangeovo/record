@@ -8,7 +8,7 @@
 module.exports = {
   title: '青山小站',
   description: 'Record about my studies',
-  base:'/record/',
+  base: '/record/',
   head: [
     ['link',
       { rel: 'icon', href: '/avatar.jpg' }
@@ -22,8 +22,8 @@ module.exports = {
       { text: '首页', link: '/' },
       //添加下拉菜单
       {
-        text: '前端开发',  //默认显示        
-        ariaLabel: '前端开发',  //用于识别的label
+        text: '前端基础',  //默认显示        
+        ariaLabel: '前端基础',  //用于识别的label
         items: [
           { text: 'JavaScript', link: '/pages/frontend/javascript.md' },
           //点击标签会跳转至link的markdown文件生成的页面
@@ -36,9 +36,10 @@ module.exports = {
         text: '计算机基础',
         ariaLabel: '计算机基础',
         items: [
-          { text: '计算机网络', link: '/pages/cs/network.md' },
-          { text: '数据结构', link: '/pages/cs/dataStructure.md' },
+          { text: 'URL的伟大冒险', link: '/pages/cs/408.md' },
           { text: 'CPP', link: '/pages/cs/cpp.md' },
+          { text: '数据结构', link: '/pages/cs/dataStructure.md' },
+          { text: '计算机网络', link: '/pages/cs/network.md' },
         ]
       },
       {
@@ -70,6 +71,7 @@ module.exports = {
             ['cpp.md', 'C++'],
             ['dataStructure.md', '数据结构与算法'], //菜单名称为'子菜单1'，跳转至/pages/folder1/test1.md
             ['network.md', '计算机网络'],
+            ['408.md','url的伟大冒险']
           ]
         },
       ],
