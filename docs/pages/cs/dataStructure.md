@@ -58,7 +58,15 @@ int main()
 ```
 
 
-
+## 排序算法
+- 比较类排序
+1. 插入排序(直接插入排序，希尔排序)
+2. 选择排序(直接选择排序，堆排序)
+3. 交换排序(冒泡排序，快速排序)
+4. 归并排序(二路归并排序，多路归并排序)
+- 非比较类排序
+1. 计数排序
+2. 基数排序(LSD，MSD)
 ## 插入排序
 
 ```cpp
@@ -82,6 +90,25 @@ void insertSort(int num[], int n)
         }
     }
 }
+void shell(int nums[], int n)
+{
+    int i, j, cur;
+    for (int dk = n / 2; dk >= 1; dk /= 2)
+    {
+        for (i = dk; i < n; i++)
+        {
+            if (nums[i] < nums[i - dk])
+            {
+                cur = nums[i];
+                for (j = i - dk; j >= 0 && nums[j] > cur; j -= dk)
+                {
+                    nums[j + dk] = nums[j]
+                }
+                nums[j + dk] = cur;
+            }
+        }
+    }
+}
 int main()
 {
     int a[] = {3, 1, 2, 5, 4};
@@ -98,26 +125,29 @@ int main()
 #include <stdio.h>
 #include <string>
 using namespace std;
-void selectSort(int num[], int n)
+void select(int *nums, int n)
 {
-    int i, j;
-    for (i = 0; i < n - 1; i++)
+    int i, j, min;
+    for (i = 0; i < n; i++)
     {
+        min = i;
         for (j = i + 1; j < n; j++)
         {
-            if (num[j] < num[i])
+            if (nums[min] > nums[j])
             {
-                int temp = num[j];
-                num[j] = num[i];
-                num[i] = temp;
+                min = j;
             }
+        }
+        if (min != i)
+        {
+            swap(nums[min], nums[i]);
         }
     }
 }
 int main()
 {
     int a[] = {3, 6, 1, 4, 2, 2, 2};
-    selectSort(a, 7);
+    select(a, 7);
     for (int i = 0; i < 7; i++)
     {
         printf("%d", a[i]);
@@ -125,13 +155,13 @@ int main()
 }
 ```
 
-## 快速排序
+## 交换排序
 
 ```cpp
 #include <stdio.h>
 #include <string>
 using namespace std;
-//单边搜索
+// 单边搜索
 int sidePartition(int num[], int low, int high)
 {
     int pivot = num[low];
@@ -140,7 +170,8 @@ int sidePartition(int num[], int low, int high)
     int temp;
     while (j <= high)
     {
-        if(num[j] < pivot){
+        if (num[j] < pivot)
+        {
             i++;
             temp = num[j];
             num[j] = num[i];
@@ -153,7 +184,7 @@ int sidePartition(int num[], int low, int high)
     num[low] = temp;
     return i;
 }
-//双边搜索
+// 双边搜索
 int partition(int num[], int low, int high)
 {
     int pivot = num[low];
@@ -178,9 +209,48 @@ void quickSort(int num[], int low, int high)
     if (low < high)
     {
         int pivot = sidePartition(num, low, high);
-        //int pivot = partition(num, low, high);
+        // int pivot = partition(num, low, high);
         quickSort(num, low, pivot - 1);
         quickSort(num, pivot + 1, high);
+    }
+}
+// quick plus
+void quick_sort(int nums[], int left, int right)
+{
+    if (left >= right)
+        return;
+    int i = left - 1, j = right + 1, pivot = nums[(left + right) / 2];
+    while (i < j)
+    {
+        do
+            i++;
+        while (nums[i] < pivot);
+        do
+            j--;
+        while (nums[j] > pivot);
+        if (i < j)
+        {
+            swap(nums[i], nums[j]);
+        }
+    }
+    quick_sort(nums, left, j);
+    quick_sort(nums, j + 1, right);
+}
+// 冒泡排序
+void bubbleSort(int num[], int n)
+{
+    int i, j;
+    for (i = 0; i < n - 1; i++)
+    {
+        for (j = i + 1; j < n; j++)
+        {
+            if (num[j] < num[i])
+            {
+                int temp = num[j];
+                num[j] = num[i];
+                num[i] = temp;
+            }
+        }
     }
 }
 int main()
