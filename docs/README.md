@@ -9,7 +9,7 @@ features:
 - title: 前端er
   details: 主要通过vue开发的前端小白
 - title: 学习记录
-  details: 记录偶尔学习经常遗忘的点滴
+  details: 懒狗也得写点东西
 - title: 想说的
   details: 种一颗树，最好的时间是十年前
 ---
